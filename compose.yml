@@ -1,0 +1,46 @@
+# compose.yml
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:15
+    ports:
+      - '5432:5432'
+    volumes:
+      - ../pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres_user
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_DB: traccar_db
+    networks:
+      - fleet-network
+  traccar:
+    container_name: traccar
+    image: traccar/traccar:latest
+    ports:
+      - "8082:8082"
+    depends_on:
+      postgres:
+        condition: service_started
+    volumes:
+      - ./traccar/traccar.xml:/opt/traccar/conf/traccar.xml:ro
+      - ./traccar/db-data:/opt/traccar/data
+    networks:
+      - fleet-network
+
+  refine:
+    container_name: refine
+    build:
+      context: ./refine
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - API_URL=http://traccar:8082/api
+      - TRACCAR_URL=http://traccar:8082
+    networks:
+      - fleet-network
+
+networks:
+  fleet-network:
+    driver: bridge

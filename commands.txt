@@ -1,0 +1,1 @@
+echo "# project-tree.txt\n" > project-tree.txt && tree -I node_modules >> project-tree.txt

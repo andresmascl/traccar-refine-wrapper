@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE properties SYSTEM 'http://java.sun.com/dtd/properties.dtd'>
+<properties>
+
+    <!-- Configuración de Base de Datos -->
+    <entry key='database.driver'>org.postgresql.Driver</entry>
+    <entry key='database.url'>jdbc:postgresql://postgres:5432/traccar_db</entry>
+    <entry key='database.user'>postgres_user</entry>
+    <entry key='database.password'>postgres_password</entry>
+	<entry key='web.disableShare'>false</entry>
+
+    <!-- Configuración General -->
+    <entry key='web.port'>8082</entry>
+    <entry key='web.origin'>*</entry> <!-- Permite CORS para tu frontend -->
+    
+    <!-- Habilitar webhooks para tu API de Payload -->
+    <entry key='event.forward.enable'>true</entry>
+    <!-- <entry key='event.forward.url'>http://payload:3000/api/traccar-webhooks</entry> -->
+
+    <!-- Habilitar registro de nuevos usuarios -->
+	<entry key='registration.enabled'>true</entry>
+</properties>
